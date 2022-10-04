@@ -17,7 +17,7 @@ class Utility
      * @param string $appendedString
      * @return string
      */
-    public static function truncateSentence(string $sentence, int $maxCharacter=60, string $appendedString="&hellip;")
+    public static function truncateSentence(string $sentence, int $maxCharacter=60, string $appendedString="&hellip;"): string
     {
         $sentence = trim($sentence);
 
