@@ -102,3 +102,12 @@ $name = 'Persönlichkeiten';
 test("[OK non english character] - $name", function () use ($name) {
     expect(Utility::isValidTextField($name))->toBeTrue();
 });
+
+$name = "John?";
+test("[TRAP Name with question mark] - $name", function () use ($name) {
+    expect(Utility::isValidTextField($name, 80))->toBeFalse();
+});
+$name = "JohnSmith ?";
+test("[TRAP Name with question mark and space] - $name", function () use ($name) {
+    expect(Utility::isValidTextField($name, 80))->toBeFalse();
+});

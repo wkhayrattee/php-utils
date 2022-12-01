@@ -36,6 +36,7 @@ class Utility
      * - does it contain any kind of symbol or misc charactors
      * - does it contain any dinbats characters
      * - does it contain a url
+     * - does it contain a question mark ?
      * - does it contain suspicious url specific patterns like: .ru, .php, www.
      *
      * NOTE: See Test case for scenarios
@@ -105,7 +106,8 @@ class Utility
         $dirty_pattern = [
             '.ru',
             '.php',
-            'www.'
+            'www.',
+            '?'
         ];
         foreach ($dirty_pattern as $pattern) {
             if (str_contains($dirty_string, $pattern)) {
