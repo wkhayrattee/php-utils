@@ -29,4 +29,54 @@ class Utility
 
         return $sentence;
     }
+
+    /**
+     * To validate a name input field, (for example when used on a subscription form), against the following:
+     * - does it contain emoji
+     * - does it contain any kind of symbol or misc charactors
+     * - does it contain any dinbats characters
+     * - does it contain a url
+     * - does it contain suspicious url specific patterns like: .ru, .php, www.
+     *
+     * NOTE: See Test case for scenarios
+     *
+     * @param $dirty_string
+     * @param false $char_length
+     * @return bool
+     */
+    public static function isValidTextField($dirty_string, $char_length=false)
+    {
+        //Check for any emojis / maps / Dingbats / misc symbols characters
+        $dirty_string_to_uft8 = mb_convert_encoding($dirty_string, "UTF-8");
+        $isMatched = preg_match('/[\x00-\x1F\x80-\xFF]/', $dirty_string_to_uft8);
+
+        if ($isMatched == 1) {
+            return false;
+        }
+
+        //check for any urls
+        $isMatched = preg_match('/(http|https|ftp|mailto)/', $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+
+        // if matches any of the following
+        $dirty_pattern = [
+            '.ru',
+            '.php',
+            'www.'
+        ];
+        foreach ($dirty_pattern as $pattern) {
+            if (str_contains($dirty_string, $pattern)) {
+                return false;
+            }
+        }
+
+        //if length of string is too long
+        if (($char_length !== false) && strlen($dirty_string) >= $char_length) {
+            return false;
+        }
+
+        return true;
+    }
 }
