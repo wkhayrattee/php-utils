@@ -46,10 +46,51 @@ class Utility
      */
     public static function isValidTextField($dirty_string, $char_length=false)
     {
-        //Check for any emojis / maps / Dingbats / misc symbols characters
-        $dirty_string_to_uft8 = mb_convert_encoding($dirty_string, "UTF-8");
-        $isMatched = preg_match('/[\x00-\x1F\x80-\xFF]/', $dirty_string_to_uft8);
+//        //Check for any emojis / maps / Dingbats / misc symbols characters
+//        $dirty_string_to_uft8 = mb_convert_encoding($dirty_string, "UTF-8");
+//        $isMatched = preg_match('/[\x00-\x1F\x80-\xFF]/', $dirty_string_to_uft8);
+//
+//        if ($isMatched == 1) {
+//            return false;
+//        }
 
+        $pattern = '/[\x{1F600}-\x{1F64F}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+        //Symbols & Pictographs
+        $pattern = '/[\x{1F300}-\x{1F5FF}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+        //Transport & Map Symbols
+        $pattern = '/[\x{1F680}-\x{1F6FF}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+        //More Miscellaneous Symbols and Pictographs
+        $pattern = '/[\x{1F300}-\x{1F5FF}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+        //Misc Symbols
+        $pattern = '/[\x{2600}-\x{26FF}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+        $pattern = '/[\x{2600}-\x{26FF}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
+        if ($isMatched == 1) {
+            return false;
+        }
+        //Dingbats Symbols
+        $pattern = '/[\x{2700}-\x{27BF}]/u';
+        $isMatched = preg_match($pattern, $dirty_string);
         if ($isMatched == 1) {
             return false;
         }
